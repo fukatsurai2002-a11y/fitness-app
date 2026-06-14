@@ -188,7 +188,7 @@ export default function AITrainerCard({ nutritionLogs, dailyGoals, date, onOptim
       .eq("date", date)
       .maybeSingle();
 
-    if (saved?.advices?.length > 0) {
+    if (saved && saved.advices && saved.advices.length > 0) {
       show((saved.advices as Array<{ kind: string; title: string; text: string }>).map(toAdvice));
       return;
     }
