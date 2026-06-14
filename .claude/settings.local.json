@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(run)",
+      "PowerShell(Start-Sleep -Seconds 5; Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 10 | Select-Object -ExpandProperty StatusCode)",
+      "PowerShell(Start-Sleep -Seconds 8; try { $r = Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 10; Write-Host \"HTTP $\\($r.StatusCode\\)\" } catch { Write-Host \"Not ready yet: $_\" })",
+      "PowerShell(Get-Process *)",
+      "PowerShell(Start-Sleep -Seconds 10; try { $r = Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 15; Write-Host \"HTTP $\\($r.StatusCode\\): OK\" } catch { Write-Host \"Error: $_\" })",
+      "PowerShell(Stop-Process *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\fukat\\\\suntory-app\\\\.env.local\"\\); $bytes | Select-Object -First 50 | ForEach-Object { \"{0:X2}\" -f $_ } | Join-String -Separator \" \")",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\fukat\\\\suntory-app\\\\.env.local\"\\); \\($bytes | Select-Object -First 60 | ForEach-Object { \"{0:X2}\" -f $_ }\\) -join \" \")",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\fukat\\\\suntory-app\\\\.env.local\"\\); \\($bytes | ForEach-Object { \"{0:X2}\" -f $_ }\\) -join \" \")",
+      "PowerShell(New-Item *)",
+      "WebFetch(domain:localhost)",
+      "PowerShell($res = Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing; $res.Content | Select-String -Pattern \"AI目標|FitTracker|Sparkles\" | Select-Object -First 10)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\fukat\\\\suntory-app\" -Depth 2 | Where-Object { $_.Name -notmatch \"node_modules|\\\\.next|\\\\.git\" } | Select-Object FullName, PSIsContainer | Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\fukat\\\\suntory-app\\\\src\" -Recurse | Where-Object { -not $_.PSIsContainer } | Select-Object -ExpandProperty FullName | Sort-Object)"
+    ]
+  }
+}
