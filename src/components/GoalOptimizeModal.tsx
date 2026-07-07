@@ -78,8 +78,15 @@ export default function GoalOptimizeModal({ currentGoals, onApply, onClose }: Pr
   const handleApply = async () => {
     if (!result) return;
     const goals: DailyGoals = { calories: result.calories, protein: result.protein, fat: result.fat, carbs: result.carbs };
-    const { error } = await supabase.from("target_settings").insert(goals);
-    if (error) console.error("Failed to save target_settings:", error);
+    const { error } = await supabase
+      .from("target_settings")
+      .insert({ ...goals, date: new Date().toISOString().split("T")[0] });
+    if (error) {
+      console.error("Failed to save target_settings:", error);
+      setError("目標の保存に失敗しました。もう一度お試しください。");
+      setState("error");
+      return;
+    }
     onApply(goals);
     onClose();
   };
